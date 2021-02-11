@@ -1,33 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import { TableWithBrowserPagination, Column } from "react-rainbow-components";
+import { Table, Column, MenuItem } from "react-rainbow-components";
 import { Link } from 'react-router-dom';
 
 function Coaches() {
+    let selectedCoaches = [];
+
     const [coachData, setCoachData] = useState([]);
+    const [didLoad, setDidLoad] = useState(false);
 
     useEffect(() => {
         fetch(`https://manager-prod.herokuapp.com/coaches`, {method: "GET"})
             .then(res => res.json())
             .then(response => {
-                setCoachData(response)
+                setCoachData(response);
+                setDidLoad(true);
             })
             .catch(error => console.log(error));
     }, []);
+
+    function updateSelection(selection){
+        selectedCoaches = selection;
+        document.getElementById('deleteSelected').hidden = !(selectedCoaches.length > 0);
+    }
+
+    function deleteSelection() {
+        // TODO: Interface with API for multi delete
+    }
 
     return (
         <div className="coaches">
             <div class="container my-3">
                 <h1>{coachData.length} Coaches</h1>
-                <div class="align-content-right my-2">
-                    <Link to="/newCoach"><button type="button" className="btn btn-primary">Add Coach</button></Link>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <Link to="/newCoach"><button type="button" className="btn btn-secondary">Add Coach</button></Link>
+                    <button id="deleteSelected" type="button" className="btn btn-danger" hidden="true" onClick={deleteSelection()}>Delete Selected</button>
                 </div>
                 <div class="my-2">
-                    <TableWithBrowserPagination pageSize={30} data={coachData} keyField="id">
+                    <Table isLoading={!didLoad} showCheckboxColumn onRowSelection={selection => updateSelection(selection)} data={coachData} keyField="id">
                         <Column header={`First Name`} field={`first_name`}/>
                         <Column header={`Last Name`} field={`last_name`}/>
                         <Column header={`EID`} field={`eid`}/>
                         <Column header={`Email`} field={`email`}/>
-                    </TableWithBrowserPagination>
+                        <Column type="action">
+                            {/* TODO: Call API for delete and redirect to component for editing data */}
+                            <MenuItem label="Edit" onClick={(event, data) => console.log(`Edit ${data.id}`)} />
+                            <MenuItem label="Delete" onClick={(event, data) => console.log(`Delete ${data.id}`)} />
+                        </Column>
+                    </Table>
                 </div>
             </div>
         </div>

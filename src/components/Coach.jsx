@@ -1,6 +1,8 @@
 import React from 'react';
 
 function Coach(){
+    // TODO: Add editing state
+    // TODO: Add read-only state
     return (
       <div className="coach">
         <div class={`container`}>
