@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Column, MenuItem } from "react-rainbow-components";
 import { Link } from 'react-router-dom';
+import NameCell from './NameCell';
 
 function Coaches() {
     let selectedCoaches = [];
@@ -12,7 +13,17 @@ function Coaches() {
         fetch(`https://manager-prod.herokuapp.com/coaches`, {method: "GET"})
             .then(res => res.json())
             .then(response => {
-                setCoachData(response);
+                const coachData = response.map(item => {
+                    return {
+                        "eid": item.eid,
+                        "email": item.email,
+                        "coach": {
+                            "id": item.id,
+                            "name": item.first_name.concat(" ", item.last_name),
+                        }
+                    }
+                });
+                setCoachData(coachData);
                 setDidLoad(true);
             })
             .catch(error => console.log(error));
@@ -37,8 +48,7 @@ function Coaches() {
                 </div>
                 <div class="my-2">
                     <Table isLoading={!didLoad} showCheckboxColumn onRowSelection={selection => updateSelection(selection)} data={coachData} keyField="id">
-                        <Column header={`First Name`} field={`first_name`}/>
-                        <Column header={`Last Name`} field={`last_name`}/>
+                        <Column header={`Name`} field={`coach`} component={ NameCell }/>
                         <Column header={`EID`} field={`eid`}/>
                         <Column header={`Email`} field={`email`}/>
                         <Column type="action">
