@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "node --max_old_space_size=4096 node_modules/.bin/react-scripts start",
-    "build": "yarn build",
+    "build": "node --max_old_space_size=4096 node_modules/.bin/react-scripts build",
     "devstart": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
