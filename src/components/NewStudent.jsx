@@ -37,6 +37,10 @@ function NewStudent(){
             errors.eid = 'Required';
         }
 
+        if (values.coach === 'null') {
+            errors.coach = 'Assign a coach before submitting';
+        }
+
         return errors;
     };
 
@@ -120,7 +124,7 @@ function NewStudent(){
                                 onBlur={formik.handleBlur}
                                 value={formik.values.coach}
                             >
-                                <option selected value={"none"}>Assign a coach</option>
+                                <option selected value={'null'}>Assign a coach</option>
                                 {coachData.map(coach => <option value={coach.id}>{coach.name}</option>)}
                             </select>
                             {formik.touched.coach && formik.errors.coach ?
