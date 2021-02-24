@@ -38,7 +38,7 @@ function Coaches() {
     return (
         <div className="coaches">
             <div class="container my-3">
-                <h1>{coachData.length} Coaches</h1>
+                <h1>{coachData.length} {coachData.length > 1 || coachData.length === 0 ? "Coaches" : "Coach"}</h1>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <Link to="/newCoach"><button type="button" className="btn btn-secondary">Add Coach</button></Link>
                     <button id="deleteSelected" type="button" className="btn btn-danger" hidden="true" onClick={deleteSelection()}>Delete Selected</button>

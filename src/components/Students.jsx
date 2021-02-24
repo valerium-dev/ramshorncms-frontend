@@ -39,7 +39,7 @@ function Students() {
     return (
         <div className="coaches">
             <div class="container my-3">
-                <h1>{studentData.length} Students</h1>
+                <h1>{studentData.length} {studentData.length > 1 || studentData.length === 0 ? "Students" : "Student"}</h1>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <Link to="/newStudent"><button type="button" className="btn btn-secondary">Add Student</button></Link>
                     <button id="deleteSelected" type="button" className="btn btn-danger" hidden="true" onClick={deleteSelection()}>Delete Selected</button>

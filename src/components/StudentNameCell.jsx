@@ -15,7 +15,7 @@ function StudentNameCell({ value }){
 
     return (
         <Link className={`studentNameCell align-items-center text-decoration-none`} to={`/students/${ value }`}>
-            <div>{ studentData.first_name + " " + studentData.last_name }</div>
+            { studentData.first_name + " " + studentData.last_name }
         </Link>
     );
 }
