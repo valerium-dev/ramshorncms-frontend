@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useFormik } from 'formik';
 
 function NewStudent(){
 
+    const [coachData, setCoachData] = useState([]);
     const [submitted, setSubmitted] = useState(false);
+
+    useEffect(() => {
+        fetch("https://manager-prod.herokuapp.com/coaches")
+            .then(res => res.json())
+            .then(response => {
+                const coachData = response.map(item => {
+                    return ({
+                        "name": item.first_name.concat(" ", item.last_name),
+                        "id": item.id,
+                    });
+                });
+                setCoachData(coachData);
+            })
+            .catch(error => console.log(error))
+    }, [])
 
     const validate = values => {
         const errors = {};
@@ -28,7 +44,8 @@ function NewStudent(){
         initialValues: {
             first_name: '',
             last_name: '',
-            eid: ''
+            eid: '',
+            coach: ''
         },
         validate,
         onSubmit: values => {
@@ -90,6 +107,24 @@ function NewStudent(){
                             />
                             {formik.touched.eid && formik.errors.eid ?
                                 <div className="form-text text-danger">{formik.errors.eid}</div> : null}
+                        </div>
+                    </div>
+                    <div className="row mb-4">
+                        <div className="col">
+                            <label className="form-label mt-2" htmlFor="coach">Coach</label>
+                            <select
+                                className="form-select"
+                                id="coach"
+                                name="coach"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.coach}
+                            >
+                                <option selected value={"none"}>Assign a coach</option>
+                                {coachData.map(coach => <option value={coach.id}>{coach.name}</option>)}
+                            </select>
+                            {formik.touched.coach && formik.errors.coach ?
+                                <div className="form-text text-danger">{formik.errors.coach}</div> : null}
                         </div>
                     </div>
 
