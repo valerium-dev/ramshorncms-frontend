@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {Column, Spinner, Table} from 'react-rainbow-components';
 import ResponseDateCell from './ResponseDateCell';
 import ResponseIdCell from './ResponseIdCell';
+import StudentNameCell from './StudentNameCell';
+import StudentIDCell from "./StudentIDCell";
 
 function Coach(props){
     // TODO: Add editing state
-    // TODO: Add student data and response data
 
     const [coachData, setCoachData] = useState({});
     const [surveyResponses, setSurveyResponses] = useState({});
@@ -47,7 +48,6 @@ function Coach(props){
                            <h5>{coachData.responses.length} {coachData.responses.length > 1 || coachData.responses.length === 0 ? "Responses" : "Response"}</h5>
                            <div class="mb-3">
                                <Table isLoading={!didLoad} data={surveyResponses} keyField="id">
-                                   {/* TODO: Create ResponseCell component */}
                                    <Column width={125} header={`Date`} field={`id`} component={ResponseDateCell}/>
                                    <Column header={`Response ID`} field={`id`} component={ResponseIdCell}/>
                                </Table>
@@ -57,8 +57,8 @@ function Coach(props){
                             <h5>{coachData.students.length} {coachData.students.length > 1 || coachData.students.length === 0 ? "Students" : "Student"}</h5>
                             <div class="mb-3">
                                 <Table isLoading={!didLoad} data={studentIds} keyField="id">
-                                    <Column header={`Name`} field={`id`}/>
-                                    <Column header={`EID`} field={`id`}/>
+                                    <Column header={`Name`} field={`id`} component={StudentNameCell}/>
+                                    <Column header={`EID`} field={`id`} component={StudentIDCell}/>
                                 </Table>
                             </div>
                         </div>
