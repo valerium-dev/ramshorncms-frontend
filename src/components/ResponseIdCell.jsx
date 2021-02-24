@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function ResponseIdCell({ value }){
 
@@ -14,10 +15,10 @@ function ResponseIdCell({ value }){
     }, [value]);
 
     return (
-        <a class="align-items-center text-decoration-none p-2" href={responseData.response_url} rel="noreferrer">
-            {/*TODO: Call Qualtrics API for a fresh response_url*/}
+        <Link class="align-items-center text-decoration-none p-2" to={`/response/${responseData.response_id}`}>
             {responseData.response_id}
-        </a>
-    );}
+        </Link>
+    );
+}
 
 export default ResponseIdCell;

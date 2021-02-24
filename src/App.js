@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Home, Coaches, Students, Coach, Student, NewCoach, NewStudent } from "./components";
+import { Navigation, Home, Coaches, Students, Coach, Student, Response, NewCoach, NewStudent } from "./components";
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
           <Route path="/students" exact component={() => <Students/>}/>
           <Route path="/coaches/:id" component={Coach}/>
           <Route path="/students/:id" component={Student}/>
+          <Route path="/response/:id" component={Response}/>
           <Route path="/newCoach" exact component={() => <NewCoach/>}/>
           <Route path="/newStudent" exact component={() => <NewStudent/>}/>
         </Switch>

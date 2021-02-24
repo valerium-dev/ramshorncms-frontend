@@ -1,6 +1,8 @@
 import React from 'react';
 
 function Home() {
+    // TODO: Excel import
+
     return (
         <div className="home">
             <div class="container">
