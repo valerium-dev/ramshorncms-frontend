@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Column, MenuItem } from "react-rainbow-components";
 import { Link } from 'react-router-dom';
-import NameCell from './NameCell';
+import CoachNameCell from './CoachNameCell';
 
 function Coaches() {
     let selectedCoaches = [];
@@ -48,7 +48,7 @@ function Coaches() {
                 </div>
                 <div class="my-2">
                     <Table isLoading={!didLoad} showCheckboxColumn onRowSelection={selection => updateSelection(selection)} data={coachData} keyField="id">
-                        <Column header={`Name`} field={`coach`} component={ NameCell }/>
+                        <Column header={`Name`} field={`coach`} component={ CoachNameCell }/>
                         <Column header={`EID`} field={`eid`}/>
                         <Column header={`Email`} field={`email`}/>
                         <Column type="action">
