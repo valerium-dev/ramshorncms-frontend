@@ -14,7 +14,7 @@ function StudentNameCell({ value }){
     }, [value]);
 
     return (
-        <Link className={`studentNameCell align-items-center text-decoration-none`} to={`/students/${ value.id }`}>
+        <Link className={`studentNameCell align-items-center text-decoration-none`} to={`/students/${ value }`}>
             <div>{ studentData.first_name + " " + studentData.last_name }</div>
         </Link>
     );
