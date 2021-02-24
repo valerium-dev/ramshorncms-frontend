@@ -17,10 +17,7 @@ function Coaches() {
                     return {
                         "eid": item.eid,
                         "email": item.email,
-                        "coach": {
-                            "id": item.id,
-                            "name": item.first_name.concat(" ", item.last_name),
-                        }
+                        "id": item.id
                     }
                 });
                 setCoachData(coachData);
@@ -48,7 +45,7 @@ function Coaches() {
                 </div>
                 <div class="my-2">
                     <Table isLoading={!didLoad} showCheckboxColumn onRowSelection={selection => updateSelection(selection)} data={coachData} keyField="id">
-                        <Column header={`Name`} field={`coach`} component={ CoachNameCell }/>
+                        <Column header={`Name`} field={`id`} component={ CoachNameCell }/>
                         <Column header={`EID`} field={`eid`}/>
                         <Column header={`Email`} field={`email`}/>
                         <Column type="action">
