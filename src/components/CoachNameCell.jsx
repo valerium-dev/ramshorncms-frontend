@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function NameCell({ value }){
+function CoachNameCell({ value }){
     return (
         <Link className={`nameCell text-decoration-none`} to={`/coaches/${ value.id }`}>
             <div>{ value.name }</div>
@@ -9,4 +9,4 @@ function NameCell({ value }){
     );
 }
 
-export default NameCell;
+export default CoachNameCell;

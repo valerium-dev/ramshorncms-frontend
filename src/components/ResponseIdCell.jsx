@@ -15,6 +15,7 @@ function ResponseIdCell({ value }){
 
     return (
         <a class="align-items-center text-decoration-none p-2" href={responseData.response_url} rel="noreferrer">
+            {/*TODO: Call Qualtrics API for a fresh response_url*/}
             {responseData.response_id}
         </a>
     );}
