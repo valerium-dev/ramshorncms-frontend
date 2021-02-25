@@ -8,6 +8,7 @@ function Coaches() {
 
     const [coachData, setCoachData] = useState([]);
     const [didLoad, setDidLoad] = useState(false);
+    const [disabled, setDisabled] = useState("disabled");
 
     useEffect(() => {
         fetch(`https://manager-prod.herokuapp.com/coaches`, {method: "GET"})
@@ -28,7 +29,17 @@ function Coaches() {
 
     function updateSelection(selection){
         selectedCoaches = selection;
-        document.getElementById('deleteSelected').hidden = !(selectedCoaches.length > 0);
+        const multiDelete = document.getElementById('deleteSelected');
+        multiDelete.textContent = `Delete ${selectedCoaches.length} ${selectedCoaches.length === 1 ? "Coach" : "Coaches"}`
+
+        const multiEmail = document.getElementById('emailSelected');
+        multiEmail.textContent = `Email ${selectedCoaches.length} ${selectedCoaches.length === 1 ? "Coach" : "Coaches"}`
+
+        if (selectedCoaches.length > 0) {
+            setDisabled('');
+        } else {
+            setDisabled('disabled');
+        }
     }
 
     function deleteSelection() {
@@ -48,12 +59,14 @@ function Coaches() {
                 <h1>{coachData.length} {coachData.length > 1 || coachData.length === 0 ? "Coaches" : "Coach"}</h1>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <Link to="/newCoach"><button type="button" className="btn btn-secondary">Add Coach</button></Link>
-                    <button id="deleteSelected" type="button" className="btn btn-danger" hidden={true} onClick={deleteSelection}>Delete Selected</button>
+                    <button id="emailSelected" type="button" className="btn btn-secondary" disabled={disabled}>Email 0 Coaches</button>
+                    <button id="deleteSelected" type="button" className="btn btn-danger" disabled={disabled} onClick={deleteSelection}>Delete 0 Coaches</button>
                 </div>
                 <div class="my-2">
                     <Table isLoading={!didLoad} showCheckboxColumn onRowSelection={selection => updateSelection(selection)} data={coachData} keyField="id">
                         <Column header={`Name`} field={`id`} component={ CoachNameCell }/>
                         <Column header={`EID`} field={`eid`}/>
+                        {/* TODO: Create component for sending email */}
                         <Column header={`Email`} field={`email`}/>
                         <Column type="action">
                             {/* TODO: Redirect to component for editing data */}

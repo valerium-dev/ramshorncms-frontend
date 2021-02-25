@@ -9,6 +9,7 @@ function Students() {
 
     const [studentData, setStudentData] = useState([]);
     const [didLoad, setDidLoad] = useState(false);
+    const [disabled, setDisabled] = useState("disabled");
 
     useEffect(() => {
         fetch(`https://manager-prod.herokuapp.com/students`, {method: "GET"})
@@ -29,7 +30,17 @@ function Students() {
 
     function updateSelection(selection){
         selectedStudents = selection;
-        document.getElementById('deleteSelected').hidden = !(selectedStudents.length > 0);
+        const multiDelete = document.getElementById('deleteSelected');
+        multiDelete.textContent = `Delete ${selectedStudents.length} ${selectedStudents.length === 1 ? "Student" : "Students"}`;
+
+        const multiReassign = document.getElementById('reassignSelected');
+        multiReassign.textContent = `Reassign ${selectedStudents.length} ${selectedStudents.length === 1 ? "Student" : "Students"}`;
+
+        if (selectedStudents.length > 0) {
+            setDisabled('');
+        } else {
+            setDisabled('disabled');
+        }
     }
 
     function deleteSelection() {
@@ -42,7 +53,8 @@ function Students() {
                 <h1>{studentData.length} {studentData.length > 1 || studentData.length === 0 ? "Students" : "Student"}</h1>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <Link to="/newStudent"><button type="button" className="btn btn-secondary">Add Student</button></Link>
-                    <button id="deleteSelected" type="button" className="btn btn-danger" hidden="true" onClick={deleteSelection()}>Delete Selected</button>
+                    <button id="reassignSelected" type="button" className="btn btn-secondary" disabled={disabled}>Reassign 0 Students</button>
+                    <button id="deleteSelected" type="button" className="btn btn-danger" disabled={disabled} onClick={deleteSelection()}>Delete 0 Students</button>
                 </div>
                 <div class="my-2">
                     <Table isLoading={!didLoad} showCheckboxColumn onRowSelection={selection => updateSelection(selection)} data={studentData} keyField="id">
