@@ -36,7 +36,7 @@ function Student(props){
 
     useEffect(() => {
         async function fetchCoachData() {
-            if (studentData.coach === undefined) return;
+            if (studentData.coach === undefined || !studentData.coach) return;
             const response = await fetch(`https://manager-prod.herokuapp.com/coaches/${studentData.coach}`, {method: "GET"})
             const coachData = await response.json()
             setCoachData(coachData);
@@ -51,9 +51,9 @@ function Student(props){
                     <h1>{studentData.first_name + " " + studentData.last_name}</h1>
                     <div>
                         {"EID: " + studentData.eid + " | Coach: "}
-                        <Link to={`/coaches/${studentData.coach}`}>
+                        {!studentData.coach ? "N/A" : <Link to={`/coaches/${studentData.coach}`}>
                             {`${coachData.first_name + " " + coachData.last_name}`}
-                        </Link>
+                        </Link>}
                     </div>
                 </div>
                 <div className="container my-2">

@@ -32,7 +32,14 @@ function Coaches() {
     }
 
     function deleteSelection() {
-        // TODO: Interface with API for multi delete
+        selectedCoaches.forEach(deleteCoach)
+    }
+
+    function deleteCoach(coach) {
+        fetch(`https://manager-prod.herokuapp.com/coaches/${coach.id}/delete`, {method: "GET"})
+            .then(res => res.json())
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
     }
 
     return (
@@ -41,7 +48,7 @@ function Coaches() {
                 <h1>{coachData.length} {coachData.length > 1 || coachData.length === 0 ? "Coaches" : "Coach"}</h1>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <Link to="/newCoach"><button type="button" className="btn btn-secondary">Add Coach</button></Link>
-                    <button id="deleteSelected" type="button" className="btn btn-danger" hidden="true" onClick={deleteSelection()}>Delete Selected</button>
+                    <button id="deleteSelected" type="button" className="btn btn-danger" hidden={true} onClick={deleteSelection}>Delete Selected</button>
                 </div>
                 <div class="my-2">
                     <Table isLoading={!didLoad} showCheckboxColumn onRowSelection={selection => updateSelection(selection)} data={coachData} keyField="id">
@@ -49,9 +56,9 @@ function Coaches() {
                         <Column header={`EID`} field={`eid`}/>
                         <Column header={`Email`} field={`email`}/>
                         <Column type="action">
-                            {/* TODO: Call API for delete and redirect to component for editing data */}
+                            {/* TODO: Redirect to component for editing data */}
                             <MenuItem label="Edit" onClick={(event, data) => console.log(`Edit ${data.id}`)} />
-                            <MenuItem label="Delete" onClick={(event, data) => console.log(`Delete ${data.id}`)} />
+                            <MenuItem label="Delete" onClick={(event, data) => deleteCoach({id: data.id})} />
                         </Column>
                     </Table>
                 </div>

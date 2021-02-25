@@ -5,18 +5,21 @@ function CoachNameCell({ value }){
     const [coachData, setCoachData] = useState({});
 
     useEffect(() => {
-        fetch(`https://manager-prod.herokuapp.com/coaches/${value}`, {method: "GET"})
-            .then(res => res.json())
-            .then(response => {
-                setCoachData(response);
-            })
-            .catch(error => console.log(error))
+        async function fetchCoachData() {
+            if (!value) return;
+            const response = await fetch(`https://manager-prod.herokuapp.com/coaches/${value}`, {method: "GET"});
+            const coachData = await response.json();
+            setCoachData(coachData);
+        }
+        fetchCoachData().catch(error => console.log(error));
     }, [value]);
 
     return (
-        <Link className={`coachNameCell align-items-center text-decoration-none`} to={`/coaches/${ value }`}>
-            <div class="px-2">{ coachData.first_name + " " + coachData.last_name }</div>
-        </Link>
+        !value ?
+            <div className={`align-items-center text-decoration-none px-2`}>N/A</div> :
+            <Link className={`coachNameCell align-items-center text-decoration-none`} to={`/coaches/${ value }`}>
+                <div class="px-2">{ coachData.first_name + " " + coachData.last_name }</div>
+            </Link>
     );
 }
 
