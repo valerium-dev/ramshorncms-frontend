@@ -49,7 +49,7 @@ function NewStudent(){
             first_name: '',
             last_name: '',
             eid: '',
-            coach: ''
+            coach: 'null'
         },
         validate,
         onSubmit: values => {
@@ -124,8 +124,8 @@ function NewStudent(){
                                 onBlur={formik.handleBlur}
                                 value={formik.values.coach}
                             >
-                                <option selected value={'null'}>Assign a coach</option>
-                                {coachData.map(coach => <option value={coach.id}>{coach.name}</option>)}
+                                <option value={'null'}>Assign a coach</option>
+                                {coachData.map(coach => <option key={coach.id} value={coach.id}>{coach.name}</option>)}
                             </select>
                             {formik.touched.coach && formik.errors.coach ?
                                 <div className="form-text text-danger">{formik.errors.coach}</div> : null}

@@ -13,28 +13,35 @@ function Student(props){
     const [didLoad, setDidLoad] = useState(false);
 
     useEffect(() => {
-        fetch(`https://manager-prod.herokuapp.com/students/${props.match.params.id}`, {method: "GET"})
-            .then(res => res.json())
-            .then(studentData => {
-                const surveyResponseIds = studentData.responses.map(item => {
-                    return {
-                        "id": item
-                    };
-                });
-                setStudentData(studentData);
-                setSurveyResponses(surveyResponseIds);
-                setDidLoad(true);
-            })
-            .catch(error => console.log(error));
+        async function fetchStudentData() {
+            const response = await fetch(`https://manager-prod.herokuapp.com/students/${props.match.params.id}`, {method: "GET"});
+            const studentData = await parseResponse(response)
+            setStudentData(studentData);
+            setDidLoad(true);
+        }
+
+        async function parseResponse(response) {
+            const studentData = await response.json();
+            const surveyResponseIds = studentData.responses.map(item => {
+                return {
+                    "id": item
+                };
+            });
+            setSurveyResponses(surveyResponseIds);
+            return studentData;
+        }
+
+        fetchStudentData().catch(error => console.log(error));
     }, [props.match.params.id]);
 
     useEffect(() => {
-        fetch(`https://manager-prod.herokuapp.com/coaches/${studentData.coach}`, {method: "GET"})
-            .then(res => res.json())
-            .then(coachData => {
-                setCoachData(coachData);
-            })
-            .catch(error => console.log(error));
+        async function fetchCoachData() {
+            if (studentData.coach === undefined) return;
+            const response = await fetch(`https://manager-prod.herokuapp.com/coaches/${studentData.coach}`, {method: "GET"})
+            const coachData = await response.json()
+            setCoachData(coachData);
+        }
+        fetchCoachData().catch(error => console.log(error));
     }, [studentData.coach]);
 
     if (didLoad) {
