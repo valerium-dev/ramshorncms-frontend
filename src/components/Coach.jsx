@@ -40,7 +40,7 @@ function Coach(props){
             <div className="coach">
                 <div className={`container my-3`}>
                     <h1>{coachData.first_name + " " + coachData.last_name}</h1>
-                    <p>{"EID: " + coachData.eid + " | " + coachData.email}</p>
+                    <p>{"EID: " + coachData.eid + " | "}<a className={"text-decoration-none"} href={`mailto:${coachData.email}`}>{coachData.email}</a></p>
                 </div>
                 <div className="container my-2">
                     <div class={`row`}>
