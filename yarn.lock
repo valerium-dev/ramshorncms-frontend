@@ -7556,6 +7556,11 @@
   dependencies:
     "p-locate" "^4.1.0"
 
+"lockr@^0.8.5":
+  "integrity" "sha512-PyWX+NYcJtk+12cARV5qaR0I2cfpHDplpOOI4KKoJtJufdnXo4sJPmfWhbZUAT5rCMgszzU0DovlSjEKp2u12A=="
+  "resolved" "https://registry.npmjs.org/lockr/-/lockr-0.8.5.tgz"
+  "version" "0.8.5"
+
 "lodash-es@^4.17.14":
   "integrity" "sha512-JD1COMZsq8maT6mnuz1UMV0jvYD0E0aUsSOdrr1/nAG3dhqQXwRRgeW0cSqH1U43INKcqxaiVIQNOUDld7gRDA=="
   "resolved" "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.20.tgz"

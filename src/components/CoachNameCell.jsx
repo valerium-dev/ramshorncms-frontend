@@ -1,15 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import Lockr from 'lockr';
 
 function CoachNameCell({ value }){
+    Lockr.prefix = 'rsp_';
+
     const [coachData, setCoachData] = useState({});
 
     useEffect(() => {
         async function fetchCoachData() {
             if (!value) return;
+
+            const cachedData = Lockr.get(value + 'coach', -1);
+            if (cachedData !== -1) {
+                setCoachData(cachedData)
+                return;
+            }
+
             const response = await fetch(`https://manager-prod.herokuapp.com/coaches/${value}`, {method: "GET"});
             const coachData = await response.json();
             setCoachData(coachData);
+            Lockr.set(value + 'coach', coachData)
         }
         fetchCoachData().catch(error => console.log(error));
     }, [value]);

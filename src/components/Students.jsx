@@ -11,6 +11,7 @@ function Students() {
     const [didLoad, setDidLoad] = useState(false);
     const [disabled, setDisabled] = useState("disabled");
 
+    // TODO: Refactor to read as sync code using async/await
     useEffect(() => {
         fetch(`https://manager-prod.herokuapp.com/students`, {method: "GET"})
             .then(res => res.json())
@@ -50,10 +51,11 @@ function Students() {
     return (
         <div className="coaches">
             <div class="container my-3">
-                <h1>{studentData.length} {studentData.length > 1 || studentData.length === 0 ? "Students" : "Student"}</h1>
+                <h1>{!didLoad ? "Loading...": `${studentData.length} ${studentData.length > 1 || studentData.length === 0 ? "Students" : "Student"}`}</h1>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <Link to="/newStudent"><button type="button" className="btn btn-secondary">Add Student</button></Link>
-                    <button id="reassignSelected" type="button" className="btn btn-secondary" disabled={disabled}>Reassign 0 Students</button>
+                    {/* TODO: Implement reassignment and deletion of multiple students */}
+                    <button id="reassignSelected" type="button" className="btn btn-secondary mx-2" disabled={disabled}>Reassign 0 Students</button>
                     <button id="deleteSelected" type="button" className="btn btn-danger" disabled={disabled} onClick={deleteSelection()}>Delete 0 Students</button>
                 </div>
                 <div class="my-2">

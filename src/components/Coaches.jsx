@@ -56,17 +56,18 @@ function Coaches() {
     return (
         <div className="coaches">
             <div class="container my-3">
-                <h1>{coachData.length} {coachData.length > 1 || coachData.length === 0 ? "Coaches" : "Coach"}</h1>
+                <h1>{!didLoad ? "Loading...": `${coachData.length} ${coachData.length > 1 || coachData.length === 0 ? "Coaches" : "Coach"}`}</h1>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <Link to="/newCoach"><button type="button" className="btn btn-secondary">Add Coach</button></Link>
-                    <button id="emailSelected" type="button" className="btn btn-secondary" disabled={disabled}>Email 0 Coaches</button>
+                    {/*TODO: Implement mass emailing of selected coaches*/}
+                    <button id="emailSelected" type="button" className="btn btn-secondary mx-2" disabled={disabled}>Email 0 Coaches</button>
                     <button id="deleteSelected" type="button" className="btn btn-danger" disabled={disabled} onClick={deleteSelection}>Delete 0 Coaches</button>
                 </div>
                 <div class="my-2">
                     <Table isLoading={!didLoad} showCheckboxColumn onRowSelection={selection => updateSelection(selection)} data={coachData} keyField="id">
                         <Column header={`Name`} field={`id`} component={ CoachNameCell }/>
                         <Column header={`EID`} field={`eid`}/>
-                        {/* TODO: Create component for sending email */}
+                        {/* TODO: Create component for mailto link*/}
                         <Column header={`Email`} field={`email`}/>
                         <Column type="action">
                             {/* TODO: Redirect to component for editing data */}
